@@ -1,5 +1,5 @@
 var starImg, fairyImg, bgImg;
-var fairy , fairyVoice;
+var fairy , fairyVoice,fairyBody,fairyOptions;
 var edges;
 var star, starBody,starBodyOptions;
 
@@ -28,7 +28,9 @@ function setup() {
 	fairy.addAnimation("fairyflying",fairyImg);  
 	fairy.scale =0.25;
 
-	
+	star = createSprite(650,30);
+	star.addImage(starImg);
+	star.scale = 0.2;
 
 	engine = Engine.create();
 	world = engine.world;
@@ -37,12 +39,16 @@ function setup() {
 		restitution:0.5,
 	    isStatic:true
 	}
-	starBody = Bodies.circle(650 , 30 , 5 ,starBodyOptions);
+
+	starBody = Bodies.circle(star.position.x , star.position.y ,starBodyOptions);
 	World.add(world, starBody);
 
-	star = createSprite(starBody.position.x,starBody.position.y);
-	star.addImage(starImg);
-	star.scale = 0.2;
+   /* fairyOptions={
+		isStatic=true
+	}*/
+	fairyBody = Bodies.rect(fairy.position.x,fairy.position.y,20,20);
+
+	
 	
 	Engine.run(engine);
 
@@ -52,11 +58,14 @@ function setup() {
 
 
 function draw() {
-  background(bgImg);
+	
+	Engine.update(engine);
+		
+	background(bgImg);
 
-  keyPressed();
+	keyPressed();
 
-  drawSprites();
+	drawSprites();
 
 }
 
