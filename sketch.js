@@ -40,14 +40,14 @@ function setup() {
 	    isStatic:true
 	}
 
-	starBody = Bodies.circle(star.position.x , star.position.y ,starBodyOptions);
+	starBody = Bodies.circle(650 , 30, 5, starBodyOptions);
 	World.add(world, starBody);
 
-   /* fairyOptions={
-		isStatic=true
-	}*/
-	fairyBody = Bodies.rect(fairy.position.x,fairy.position.y,20,20);
-
+     var fairyOptions={
+		isStatic : true
+	}
+	fairyBody = Bodies.rectangle(fairy.position.x,fairy.position.y,20,20,fairyOptions);
+    World.add(world,fairyBody);
 	
 	
 	Engine.run(engine);
@@ -59,25 +59,32 @@ function setup() {
 
 function draw() {
 	
-	Engine.update(engine);
-		
-	background(bgImg);
+    background(bgImg);
 
-	keyPressed();
+	star.x = starBody.position.x;
+	star.y = starBody.position.y;
+
+	console.log(star.y)
+
+	if(star.y >470 && starBody.position.y>470){
+		Matter.Body.setStatic(starBody, true)
+	}
+
+    Engine.update(engine);
 
 	drawSprites();
 
 }
 
 function keyPressed() {
-	if(keyDown(LEFT_ARROW)){
-		fairy.x=fairy.x-4;
+	if(keyCode === LEFT_ARROW){
+		fairy.x=fairy.x-40;
 	}
-	if(keyDown(RIGHT_ARROW)){
-	  fairy.x=fairy.x+4;
+	if(keyCode==RIGHT_ARROW){
+	  fairy.x=fairy.x+40;
   }
-   if (keyDown(DOWN_ARROW)){
-	   star.velocityY = +8;
+   if (keyCode==DOWN_ARROW){
+	   Matter.Body.setStatic(starBody, false);
    }
 	
 }
